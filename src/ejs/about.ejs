@@ -28,14 +28,85 @@ var commons = commons;
                        <h2>概要<small>About</small></h2>
                     </div>
                     <p>このページは、iPhone, iPadといったiOSで、一定条件のhoverエフェクトを付けるとタップを2回要するようになるバグを検証するためのページです。</p>
-                    <p>下記のボタン(左から右に色が満ちていく)は遷移可能です。</p>
+                    <p>例えば、下記のボタン(左から右に色が満ちていく)は遷移に2回タップを要します。</p>
                     <p class="btnWrapper">
-                        <a href="<%= path %>" class="btn btn_leftArrow">トップページへ</a>
+                        <a href="<%= path %>about.html" class="btn btn_rightArrow">概要へ</a>
                     </p>
-                    <p>しかし、下記のボタン(上から下に色が満ちていく)では遷移に2回タップを要します。どうやら、<code>height: 100%;</code>がダメなようです。</p>
+                    <p>下記のようなボタン(上から下に色が満ちていく)でも同様です。</p>
                     <p class="btnWrapper">
-                        <a href="<%= path %>" class="btn btn_bottomDown">トップページへ</a>
+                        <a href="<%= path %>about.html" class="btn btn_bottomDown">概要へ</a>
                     </p>
+                    <p>aタグそのものではなく、疑似要素に処理させている場合でも同様(これが上の場合)。</p>
+                    <p>なお、コードは下記のような感じです。</p>
+                    <h3>html</h3>
+                    <pre><code>
+&lt;p class="btnWrapper"&gt;
+    &lt;a href="./about.html" class="btn btn_rightArrow"&gt;概要へ&lt;/a&gt;
+&lt;/p&gt;
+                    </code></pre>
+                    <h3>css(scss)</h3>
+                    <pre><code>
+$color: #333;
+$bg-color: #fff;
+
+$main-color: #6BBED5; //blue
+$main-color2: #1E98B9; //dark blue
+
+$accent-color: #EDA184; //bague
+
+$link-color: #DF81A2; //pink
+$link-v-color: darken($link-color, 13%);
+$link-ha-color: lighten($link-color, 13%);
+.main {
+    .btn {
+        margin: {
+            top: 2rem;
+            bottom: 4rem;
+        }
+        padding: 1rem 1.5rem;
+        color: $link-color;
+        border: 1px solid $link-color;
+        border-radius: 0;
+        text-decoration: none;
+        position: relative;
+        display: inline-block;
+        z-index: 10;
+        &:hover, &:active, &:focus {
+            color: $bg-color;
+            border: 1px solid $link-ha-color;
+            text-decoration: none;
+            &.btn_rightArrow {
+                &:before {
+                    width: 100%;
+                }
+                &:after {
+                    color: $bg-color;
+                }
+            }
+        }
+        &.btn_rightArrow {
+            &:before {
+                content: "";
+                position: absolute;
+                display: block;
+                background-color: $link-ha-color;
+                width: 0;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                @include transitionSet();
+                z-index: -1;
+            }
+            &:after {
+                font-family: FontAwesome;
+                content: "\f105";
+                color: $link-color;
+                padding-left: 3rem;
+            }
+        }
+    }
+}
+                    </code></pre>
                 </div>
             </div>
         </section>
