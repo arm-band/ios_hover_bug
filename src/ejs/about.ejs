@@ -1,0 +1,47 @@
+<%
+var param = {
+    "title": "このページについて",
+    "entitle": "About",
+    "css": "index",
+    "description": "iOSでhoverエフェクトを付けると一定条件下でタップを2回要するようになるバグのためのページ",
+    "hierarchy": 0,
+    "indexFlag": true
+};
+var commons = commons;
+%>
+<%- include("common/_pathdir", { param }) %>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<%- include("common/_head", { param }) %>
+</head>
+<body>
+<div id="wrapper">
+<%- include("common/_header", { commons, param }) %>
+<%- include("common/_eyecatch_about", { param }) %>
+    <!-- main -->
+    <main class="main indexpage" id="toppage">
+        <section class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="contents_header page-header">
+                       <h2>概要<small>About</small></h2>
+                    </div>
+                    <p>このページは、iPhone, iPadといったiOSで、一定条件のhoverエフェクトを付けるとタップを2回要するようになるバグを検証するためのページです。</p>
+                    <p>下記のボタン(左から右に色が満ちていく)は遷移可能です。</p>
+                    <p class="btnWrapper">
+                        <a href="<%= path %>" class="btn btn_leftArrow">トップページへ</a>
+                    </p>
+                    <p>しかし、下記のボタン(上から下に色が満ちていく)では遷移に2回タップを要します。どうやら、<code>height: 100%;</code>がダメなようです。</p>
+                    <p class="btnWrapper">
+                        <a href="<%= path %>" class="btn btn_bottomDown">トップページへ</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- /main -->
+<%- include("common/_footer", { commons }) %>
+</div>
+</body>
+</html>

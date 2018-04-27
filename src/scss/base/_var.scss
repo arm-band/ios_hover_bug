@@ -1,0 +1,20 @@
+@charset "utf-8";
+
+// ============================================= *
+//                                               *
+// 変数宣言                                      *
+//                                               *
+// ============================================= */
+$color: #333;
+$bg-color: #fff;
+
+$main-color: #6BBED5; //blue
+$main-color2: #1E98B9; //dark blue
+
+$accent-color: #EDA184; //bague
+
+$link-color: #DF81A2; //pink
+$link-v-color: darken($link-color, 13%);
+$link-ha-color: lighten($link-color, 13%);
+
+$navbar-height: 80px;

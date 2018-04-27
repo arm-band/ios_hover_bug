@@ -1,0 +1,112 @@
+@charset "utf-8";
+
+@mixin hamburgerKen() {
+    .icon-bar {
+        &:nth-child(3) {
+            &:before,
+            &:after {
+                @include transitionSet();
+                content: " ";
+                background: none;
+                display: block;
+                width: 22px;
+                height: 2px;
+                border-radius: 1px;
+            }
+        }
+    }
+    &:not(.collapsed) {
+        .icon-bar {
+            &:nth-child(2) {
+                margin-left: 22px;
+                width: 0;
+            }
+            &:nth-child(3) {
+                background: none;
+                &:before {
+                    background-color: #888;
+                    transform: rotate(135deg) translateY(-1px);
+                }
+                &:after {
+                    background-color: #888;
+                    transform: rotate(45deg) translateY(-1px);
+                }
+            }
+            &:nth-child(4) {
+                margin-right: -22px;
+                width: 0;
+            }
+        }
+    }
+}
+
+// ============================================= *
+//                                                *
+//  ナビゲーションバー                            *
+//                                                *
+// ============================================= */
+
+.navbar-default .navbar-toggle {
+    //共通
+    border-color: transparent;
+    @media (max-width: $screen-md - 1) {
+        margin-right: 8px;
+    }
+    .icon-bar {
+        background-color: $bg-color;
+        @include transitionSet();
+    }
+    //ハンバーガーアニメーション
+    @include hamburgerKen();
+    &:not(.collapsed) .icon-bar:nth-child(3):before, &:not(.collapsed) .icon-bar:nth-child(3):after {
+        background-color: $bg-color;
+    }
+}
+.navbar-default .navbar-nav {
+    &>li>a {
+        &:hover, &:active, &:focus {
+            color: $bg-color;
+            background-color: $main-color;
+        }
+    }
+    &>.active>a {
+        color: $bg-color;
+        background-color: $main-color2;
+        &:hover, &:active, &:focus {
+            color: $bg-color;
+            background-color: $main-color;
+        }
+    }
+}
+.navbar {
+    border: 0;
+    &_head {
+        margin: {
+            top: 0;
+            bottom: 0;
+        }
+    }
+    &-nav {
+        margin: 0 15px 0 0;
+        padding: 2rem 1.5rem;
+        li {
+            a {
+                margin: {
+                    top: 0;
+                    bottom: 0;
+                }
+                padding: 10px 16px;
+                border-radius: 0;
+            }
+        }
+        &>li:not(:last-child) {
+            margin-right: 0;
+        }
+    }
+    &>.container-fluid .navbar-brand {
+        color: $main-color;
+        margin-left: 15px;
+        font-family: 'Dancing Script', cursive, "YuMincho", "Yu Mincho";
+        font-size: 28px;
+    }
+}

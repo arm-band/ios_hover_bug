@@ -1,0 +1,15 @@
+@charset "utf-8";
+
+.footer {
+	clear: both;
+	background-color: $main-color2;
+	color: $bg-color;
+    /* コピーライト
+    ------------------------------- */
+    .copyRight {
+        display: block;
+        font-size: 14px;
+        margin: 3rem auto 2rem;
+        text-align: center;
+    }
+}

@@ -1,0 +1,120 @@
+/**
+ * gulp task
+ *
+ * @author    アルム＝バンド
+ * @copyright Copyright (c) アルム＝バンド
+ */
+
+var gulp = require("gulp");
+
+//全般
+var plumber = require("gulp-plumber"); //待機
+var notify = require("gulp-notify"); //標準出力
+//sass
+var sass = require("gulp-sass"); //sass
+var autoprefixer = require("gulp-autoprefixer");
+//img
+var imagemin = require("gulp-imagemin"); //画像ロスレス圧縮
+//js
+var uglify = require("gulp-uglify"); //js圧縮
+var concat = require("gulp-concat"); //ファイル結合
+var rename = require("gulp-rename"); //ファイル名変更
+//ejs
+var ejs = require("gulp-ejs");
+//file operation
+var fs = require("fs");
+//reload
+var connect = require("gulp-connect-php"); //proxy(phpファイル更新時リロード用)
+var browserSync = require("browser-sync"); //ブラウザリロード
+//styleguide
+var frontnote = require("gulp-frontnote");
+
+//path difinition
+var dir = {
+  assets: {
+    jquery   : './node_modules/jquery/dist',
+    easing   : './node_modules/jquery.easing',
+    bootstrap: './node_modules/bootstrap-honoka/dist/js'
+  },
+  src: {
+    ejs  : './src/ejs',
+    scss : './src/scss',
+    js   : './src/js',
+    img  : './src/img'
+  },
+  dist: {
+    html : './dist',
+    news : './dist/news',
+    css  : './dist/css',
+    js   : './dist/js',
+    img  : './dist/img'
+  },
+  docs: {
+    html : './docs',
+    css  : '../dist/css',
+    js   : '../dist/js',
+    img  : '../dist/img'
+  }
+};
+//jsonファイル取得
+var getCommons = function() {
+    return JSON.parse(fs.readFileSync("src/ejs/common/var.json"));
+}
+
+//scssコンパイルタスク
+gulp.task("sass", () => {
+	return gulp.src(dir.src.scss + "/**/*.scss")
+		.pipe(plumber())
+		.pipe(sass({outputStyle: "compressed"}).on("error", sass.logError))
+        .pipe(autoprefixer({
+            browsers: ['last 2 version', 'iOS >= 8.1', 'Android >= 4.4'],
+            cascade: false
+        }))
+		.pipe(gulp.dest(dir.dist.css));
+});
+
+//watchタスク(Sassファイル変更時に実行するタスク)
+gulp.task("sass-watch", () => {
+	gulp.watch(dir.src.scss + "/**/*.scss", ["sass"]);
+});
+
+
+//画像圧縮
+gulp.task("imagemin", () => {
+	gulp.src(dir.src.img + "/**/*.+(jpg|jpeg|png|gif|svg)")
+		.pipe(imagemin())
+		.pipe(gulp.dest(dir.dist.img));
+});
+
+//ejs
+gulp.task("ejs", () => {
+    var commons = getCommons();
+    gulp.src(
+        [dir.src.ejs + "/**/*.ejs", "!" + dir.src.ejs + "/**/_*.ejs", "!" + dir.src.ejs + "/news.ejs"] //_*.ejs(パーツ)とnews.ejs(別タスクで定義)はhtmlにしない
+    )
+    .pipe(plumber())
+    .pipe(ejs({commons}))
+    .pipe(rename({ extname: ".html" }))
+    .pipe(gulp.dest(dir.dist.html));
+});
+
+//proxy経由
+gulp.task("connect-sync", function() {
+    browserSync({
+        server: {
+            baseDir: dir.dist.html
+        },
+        open: 'external'
+    });
+});
+
+//gulpのみでsass-watchとejsとjsとimageminとconnect-syncを動かす
+gulp.task("default", ["sass", "sass-watch", "ejs", "imagemin", "connect-sync"], () => {
+	gulp.watch(dir.src.ejs + "/**/*.ejs", ["ejs"]);
+    gulp.watch(dir.src.ejs + "/**/*.json", ["ejs"]);
+//    gulp.watch(dir.dist.html + "/**/*.php",function () { browserSync.reload(); }); //php使うときはこっち
+    gulp.watch(dir.src.scss + "/**/*.scss", ["sass-watch"]);
+	gulp.watch(dir.src.img + "/**/*.+(jpg|jpeg|png|gif|svg)", ["imagemin"]);
+
+    gulp.watch([dir.dist.html + "/**/*.+(html|php)", dir.dist.css + "/**/*.css", dir.dist.img + "/**/*.+(jpg|jpeg|png|gif|svg)"]).on("change", () => { browserSync.reload(); });
+});
