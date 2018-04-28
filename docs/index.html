@@ -1,0 +1,92 @@
+
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="format-detection" content="telephone=no,address=no,email=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ホーム | iOS Hover Bug</title>
+	<meta name="description" content="iOSでhoverエフェクトを付けると一定条件下でタップを2回要するようになるバグのためのページ">
+
+    <!-- theme color -->
+    <meta name="theme-color" content="#6BBED5">
+
+	<!-- css -->
+	<link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/earlyaccess/sawarabimincho.css" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<link href="./css/index.css" rel="stylesheet">
+
+    <!-- ogp -->
+    <meta name="twitter:card" content="photo" />
+	<meta property="og:type" content="website" />
+	<meta name="og:title" content="iOS Hover Bug" />
+	<meta name="og:site_name" content="ホーム" />
+	<meta name="og:description" content="iOSでhoverエフェクトを付けると一定条件下でタップを2回要するようになるバグのためのページ" />
+	<meta name="og:image" content="img/eyecatch.jpg" />
+	<meta name="og:url" content="" />
+</head>
+<body>
+<div id="wrapper">
+<!-- header -->
+<header class="header" id="navbar">
+    <nav class="navbar navbar-default navbar-fixed-top">
+    	<div class="container-fluid">
+    		<div class="navbar-header">
+    			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarMenu">
+    				<span class="sr-only">トグルナビ</span>
+    				<span class="icon-bar"></span>
+    				<span class="icon-bar"></span>
+    				<span class="icon-bar"></span>
+    			</button>
+    			<h1 class="navbar_head"><a class="navbar-brand" href="./">iOS Hover Bug</a></h1>
+    		</div>
+
+    		<div class="collapse navbar-collapse navbar-right" id="navbarMenu">
+    			<ul class="nav navbar-nav">
+    				<li><a href="./about.html">概要</a></li>
+    			</ul>
+    		</div>
+    	</div>
+    </nav>
+</header>
+<!-- /header -->
+    <section class="eyecatch">
+        <div class="container-fluid">
+            <h2 class="eyecatch_header">iOS Hover Bug</h2>
+        </div>
+    </section>
+    <!-- main -->
+    <main class="main indexpage" id="toppage">
+        <section class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="contents_header page-header">
+                       <h2>概要<small>About</small></h2>
+                    </div>
+                    <p>このページは、iPhone, iPadといったiOSで、一定条件のhoverエフェクトを付けるとタップを2回要するようになるバグを検証するためのページです。</p>
+                    <p>例えば、下記のボタン(左から右に色が満ちていく)は遷移に2回タップを要します。</p>
+                    <p class="btnWrapper">
+                        <a href="./about.html" class="btn btn_rightArrow">概要へ</a>
+                    </p>
+                    <p>下記のようなボタン(上から下に色が満ちていく)でも同様です。</p>
+                    <p class="btnWrapper">
+                        <a href="./about.html" class="btn btn_bottomDown">概要へ</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- /main -->
+    <!-- footer -->
+    <footer class="footer container-fluid">
+        <small class="copyRight">Copyright &#169; 2018 アルム＝バンド All Right Reserved.</small>
+    </footer>
+    <!-- /footer -->
+</div>
+<script src="js/lib.min.js"></script>
+<script src="js/app.min.js"></script>
+</body>
+</html>
