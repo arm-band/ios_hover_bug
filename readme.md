@@ -1,8 +1,8 @@
-# hover2
+# hover2iOS
 
 ## Abstract
 
-iOSでhoverエフェクトを付けると一定条件下でタップを2回要するようになるバグのためのページ
+iOSでhoverエフェクトを付けると一定条件下でタップを2回要するようになるバグのためのページ → [検証ページのリンク](https://arm-band.github.io/ios_hover_bug/)
 
 ## References
 
