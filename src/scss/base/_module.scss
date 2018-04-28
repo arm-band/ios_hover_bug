@@ -18,6 +18,13 @@
                  Meiryo, //Windowsメイリオ
                  sans-serif;
 }
+//明朝体
+@mixin mincho() {
+    font-family: "Yu Mincho", YuMincho, "Hiragino Mincho ProN", "Hiragino Mincho Pro", "HGP明朝B", Georgia, "Sawarabi Mincho", メイリオ, Meiryo, serif;
+}
+@mixin dancing() {
+    font-family: 'Dancing Script', cursive, "Yu Mincho", YuMincho, "Hiragino Mincho ProN", "Hiragino Mincho Pro", "HGP明朝B", Georgia, "Sawarabi Mincho", メイリオ, Meiryo, serif;
+}
 
 //trasition
 @mixin transitionSet() {
@@ -62,6 +69,6 @@
     z-index: 3;
     font: {
         size: $fontSize;
-        family: 'Dancing Script', cursive, "YuMincho", "Yu Mincho"; /* googleフォント */
     }
+    @include dancing();
 }

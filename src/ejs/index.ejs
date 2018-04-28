@@ -3,6 +3,7 @@ var param = {
     "title": "ホーム",
     "entitle": "Home",
     "css": "index",
+    "js": "app.min",
     "description": "iOSでhoverエフェクトを付けると一定条件下でタップを2回要するようになるバグのためのページ",
     "hierarchy": 0,
     "indexFlag": true,
@@ -44,5 +45,6 @@ var commons = commons;
     <!-- /main -->
 <%- include("common/_footer", { commons }) %>
 </div>
+<%- include("common/_scripts", { param }) %>
 </body>
 </html>

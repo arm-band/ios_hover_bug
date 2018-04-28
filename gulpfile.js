@@ -86,6 +86,37 @@ gulp.task("imagemin", () => {
 		.pipe(gulp.dest(dir.dist.img));
 });
 
+//js圧縮&結合&リネーム
+gulp.task("js.concat", () => {
+	return gulp.src([dir.assets.jquery + "/jquery.min.js", dir.assets.bootstrap + "/bootstrap.min.js", dir.assets.easing + "/jquery.easing.js"])
+		.pipe(plumber())
+		.pipe(concat("lib.js"))
+		.pipe(gulp.dest(dir.src.js + "/concat/")); //srcとdistを別ディレクトリにしないと、自動でタスクが走る度にconcatしたものも雪だるま式に追加されていく
+});
+gulp.task("js.uglify", ["js.concat"], () => { //第2引数に先に実行して欲しい js.concat を指定する
+	return gulp.src(dir.src.js + "/concat/lib.js")
+		.pipe(plumber())
+		.pipe(uglify({output: {comments: "some"}}))
+		.pipe(rename(dir.dist.js + "/lib.min.js"))  // 出力するファイル名を変更
+		.pipe(gulp.dest("./"));
+});
+gulp.task("js.uglify.progress", () => {
+	return gulp.src(dir.src.js + "/progress.js")
+		.pipe(plumber())
+		.pipe(uglify({output: {comments: "some"}}))
+		.pipe(rename(dir.dist.js + "/progress.min.js"))
+		.pipe(gulp.dest("./"));
+});
+gulp.task("js.uglify.app", () => {
+	return gulp.src(dir.src.js + "/index.js")
+		.pipe(plumber())
+		.pipe(uglify({output: {comments: "some"}}))
+		.pipe(rename(dir.dist.js + "/app.min.js"))
+		.pipe(gulp.dest("./"));
+});
+//上記をまとめておく
+gulp.task("js", ["js.concat", "js.uglify", "js.uglify.progress", "js.uglify.app"]);
+
 //ejs
 gulp.task("ejs", () => {
     var commons = getCommons();
@@ -109,12 +140,13 @@ gulp.task("connect-sync", function() {
 });
 
 //gulpのみでsass-watchとejsとjsとimageminとconnect-syncを動かす
-gulp.task("default", ["sass", "sass-watch", "ejs", "imagemin", "connect-sync"], () => {
+gulp.task("default", ["sass", "sass-watch", "ejs", "js", "imagemin", "connect-sync"], () => {
 	gulp.watch(dir.src.ejs + "/**/*.ejs", ["ejs"]);
     gulp.watch(dir.src.ejs + "/**/*.json", ["ejs"]);
 //    gulp.watch(dir.dist.html + "/**/*.php",function () { browserSync.reload(); }); //php使うときはこっち
     gulp.watch(dir.src.scss + "/**/*.scss", ["sass-watch"]);
+    gulp.watch(dir.src.js + "/**/*.js", ["js"]);
 	gulp.watch(dir.src.img + "/**/*.+(jpg|jpeg|png|gif|svg)", ["imagemin"]);
 
-    gulp.watch([dir.dist.html + "/**/*.+(html|php)", dir.dist.css + "/**/*.css", dir.dist.img + "/**/*.+(jpg|jpeg|png|gif|svg)"]).on("change", () => { browserSync.reload(); });
+    gulp.watch([dir.dist.html + "/**/*.+(html|php)", dir.dist.css + "/**/*.css", dir.dist.img + "/**/*.+(jpg|jpeg|png|gif|svg)", dir.dist.js + "/**/*.js"]).on("change", () => { browserSync.reload(); });
 });

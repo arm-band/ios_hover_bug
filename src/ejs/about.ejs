@@ -3,6 +3,7 @@ var param = {
     "title": "このページについて",
     "entitle": "About",
     "css": "index",
+    "js": "app.min",
     "description": "iOSでhoverエフェクトを付けると一定条件下でタップを2回要するようになるバグのためのページ",
     "hierarchy": 0,
     "indexFlag": true
@@ -36,16 +37,27 @@ var commons = commons;
                     <p class="btnWrapper">
                         <a href="<%= path %>about.html" class="btn btn_bottomDown">概要へ</a>
                     </p>
-                    <p>aタグそのものではなく、疑似要素に処理させている場合でも同様(これが上の場合)。</p>
+                    <p>aタグそのものではなく、疑似要素に処理させている場合でも同様(これが上の場合に該当)。</p>
                     <p>なお、コードは下記のような感じです。</p>
-                    <h3>html</h3>
-                    <pre><code>
+                    <!-- tab menu -->
+                    <ul class="nav nav-tabs" id="codeTab">
+                    	<li class="active"><a href="#codeHtml" data-toggle="tab">HTML</a></li>
+                    	<li><a href="#codeScss" data-toggle="tab">css(Scss)</a></li>
+                    </ul>
+                    <!-- /tab menu -->
+                    <!-- tab contents -->
+                    <div class="tab-content">
+                    	<div class="tab-pane fade in active" id="codeHtml">
+                            <h3>html</h3>
+                            <pre><code>
 &lt;p class="btnWrapper"&gt;
     &lt;a href="./about.html" class="btn btn_rightArrow"&gt;概要へ&lt;/a&gt;
 &lt;/p&gt;
-                    </code></pre>
-                    <h3>css(scss)</h3>
-                    <pre><code>
+                            </code></pre>
+                    	</div>
+                    	<div class="tab-pane fade" id="codeScss">
+                            <h3>css(scss)</h3>
+                            <pre><code>
 $color: #333;
 $bg-color: #fff;
 
@@ -106,7 +118,10 @@ $link-ha-color: lighten($link-color, 13%);
         }
     }
 }
-                    </code></pre>
+                            </code></pre>
+                    	</div>
+                    </div>
+                    <!-- /tab contents -->
                 </div>
             </div>
         </section>
@@ -114,5 +129,6 @@ $link-ha-color: lighten($link-color, 13%);
     <!-- /main -->
 <%- include("common/_footer", { commons }) %>
 </div>
+<%- include("common/_scripts", { param }) %>
 </body>
 </html>
